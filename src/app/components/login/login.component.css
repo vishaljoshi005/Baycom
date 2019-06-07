@@ -1,0 +1,35 @@
+.main{
+  background-color: #E8E8E8;
+  height: 100vh;
+}
+.example-card {
+  width:400px;
+  max-width: 100%;
+//border: solid ;
+  padding: 30px;
+
+
+}
+.mat-form-field{
+  width: 350px;
+  max-width:100%;
+
+}
+
+.mat-raised-button{
+  width: 270px;
+  max-width:100%;
+}
+
+.mat-flat-button{
+  min-width: 1%;
+  font-size: 11px;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+

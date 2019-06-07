@@ -1,0 +1,55 @@
+<div class="main" fxLayout="column" fxLayoutAlign="center center" >
+
+  <mat-card class="example-card" fxFlex="0 1 auto" >
+    <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+      <mat-card-title>
+        Ebay2Woo
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+      <mat-card-title>
+        Login
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+      <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="" type="text" formControlName="username" >
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <label>
+          <input matInput type="password" formControlName="password"  >
+        </label>
+      </mat-form-field>
+
+      <span fxLayout="row" fxLayoutAlign="center">
+        <button mat-raised-button type="submit" color="warn">Login</button>
+      </span>
+
+      <span fxLayout="row" fxLayoutAlign="end" fxLayoutGap="">
+        <a mat-flat-button (click)="forgotDialog()">Forgot Password</a>
+        <a mat-flat-button>Register</a>
+
+        <span fxFlexOffset="12px"></span>
+      </span>
+
+      </form>
+
+    </mat-card-content>
+
+
+    <!--<mat-card-actions>-->
+      <!--<button mat-raised-button type="submit">Login</button>-->
+    <!--</mat-card-actions>-->
+  </mat-card>
+
+
+
+
+
+
+
+
+</div>
