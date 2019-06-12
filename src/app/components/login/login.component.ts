@@ -1,8 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {Form, FormBuilder, FormControl, NgForm, Validators} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material';
+import {Form, FormBuilder, FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar} from '@angular/material';
 import {Router} from '@angular/router';
-import {LoginService} from '../../core/auth/login.service';
+import {AuthService} from '@/core/services/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -11,44 +11,52 @@ import {LoginService} from '../../core/auth/login.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginForm = this.formBuilder.group({
-    username: ['',  [Validators.required], [] ],
-    password: ['', [Validators.required]]
-  });
-
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private loginService: LoginService , private router: Router) { }
+  loginForm: FormGroup;
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private authenticationService: AuthService , private router: Router, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.loginForm.valueChanges.subscribe((objects => {
-      // console.log(objects.userName);
-    }));
+    this.loginForm = this.formBuilder.group({
+      username: ['',  [Validators.required], [] ],
+      password: ['', [Validators.required]]
+    });
+
+    this.authenticationService.logout();
+  }
+  openSnackBar() {
+    this.snackBar.open('Invalid Username or Password', 'Close', {
+      duration: 2000,
+      panelClass: ['style-success'],
+    });
   }
 
+
   private onSubmit() {
-     console.log(this.loginForm.value);
-     this.loginService.login(this.loginForm.value).subscribe((data) => {
-      // console.log(data);
-       if (data.headers) {
-         console.log(data.headers.get('Authorization'));
-         this.router.navigateByUrl('/page');
-       } else {
-         console.log('Incorrect Password');
-       }
-     }, ( err ) => {
-       console.log(err);
-     })
-     this.loginForm.get('username').clearValidators();
-     this.loginForm.get('password').clearValidators();
-    // this.loginForm.reset();
+    if (this.loginForm.valid) {
+      this.authenticationService.login(this.loginForm.value).subscribe((data) => {
+        if (data.success) {
+          this.router.navigate(['/login']); // Change this URL
+        } else {
+          this.openSnackBar();
+          this.loginForm.reset();
+        }
+      }, ( err ) => {
+
+      });
+
+      this.loginForm.get('username').clearValidators();
+      this.loginForm.get('password').clearValidators();
+    } else {
+      // Add some thing
+    }
+
   }
 
     private forgotDialog() {
-      this.dialog.open(ForgotPasswordComponent, { disableClose: true,
+      this.dialog.open( ForgotPasswordComponent , { disableClose: true,
         data: { name: 'austin' },
       });
 
       this.dialog.afterAllClosed.subscribe(result => {
-        // console.log(`Dialog result: ${result}`); // Pizza!
         this.loginForm.reset();
       });
     }
@@ -58,6 +66,7 @@ export class LoginComponent implements OnInit {
 @Component({
     selector: 'app-forgot-password',
     templateUrl: 'forgot-password.html',
+    styleUrls: ['./forgot.component.css']
   })
   export class ForgotPasswordComponent {
   submitted = false;

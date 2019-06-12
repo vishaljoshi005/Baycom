@@ -14,14 +14,17 @@ import {SharedModule} from './shared/shared.module';
 import {ForgotPasswordComponent, LoginComponent} from './components/login/login.component';
 
 
-import {LoginService} from './core/auth/login.service';
+import {AuthService} from '@/core/services/auth/auth.service';
 import {HttpClientModule} from '@angular/common/http';
+import { RegisterComponent } from './components/register/register.component';
+import {CoreModule} from '@/core/core.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +35,7 @@ import {HttpClientModule} from '@angular/common/http';
     ReactiveFormsModule,
     HttpClientModule,
 
+    CoreModule,
     SharedModule
   ],
   entryComponents: [
@@ -39,7 +43,7 @@ import {HttpClientModule} from '@angular/common/http';
   ],
   providers: [
     {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true, disableClose: true, } },
-    LoginService
+    AuthService
   ],
   bootstrap: [AppComponent]
 })

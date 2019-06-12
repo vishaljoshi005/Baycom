@@ -1,12 +1,13 @@
 .main{
   background-color: #E8E8E8;
-  height: 100vh;
 }
+
 .example-card {
   width:400px;
   max-width: 100%;
-//border: solid ;
   padding: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .mat-form-field{
@@ -14,17 +15,7 @@
   max-width:100%;
 
 }
-
 .mat-raised-button{
   width: 270px;
   max-width:100%;
 }
-
-.mat-flat-button{
-  min-width: 1%;
-  font-size: 11px;
-  margin-top: 5px;
-  padding: 5px;
-}
-
-
