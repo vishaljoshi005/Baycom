@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import { map } from 'rxjs/operators';
+import {catchError, map} from 'rxjs/operators';
 import {User, LoginModel} from '@/core/models';
 
 interface LoginResponse {
@@ -31,6 +31,7 @@ export class AuthService {
   }
 
   login(logindata: LoginModel): Observable<any> {
+    console.log(logindata);
     return this.http.post<any>(this.LOGIN_URL, logindata , { observe : 'response'} )
       .pipe(map(user => {
         // console.log('USER WHOLE OBJECT');
@@ -43,7 +44,8 @@ export class AuthService {
         } else {
           return { success : false, message : 'Invalid username or password'};
         }
-      }));
+      }),
+        catchError(() => of({success : false, message : 'Invalid username or password'}) ));
   }
 
 

@@ -1,6 +1,6 @@
 <div class="main" fxLayout="column" fxLayoutAlign="center center" >
 
-  <mat-card class="example-card" fxFlex="1 1 auto" >
+  <mat-card *ngIf="!submitted" class="example-card" fxFlex="1 1 auto" >
     <mat-card-header fxLayout="column" fxLayoutAlign="center center">
       <mat-card-title>
         Ebay2Woo
@@ -12,47 +12,97 @@
       </mat-card-title>
     </mat-card-header>
     <mat-card-content >
-      <form [formGroup]="RegisterForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center" >
-        <mat-form-field appearance="outline">
-          <mat-label>First Name</mat-label>
-          <input matInput placeholder="" type="text" formControlName="firstName" >
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Last name</mat-label>
-          <input matInput placeholder="" type="text" formControlName="lastName" >
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput placeholder="" type="text" formControlName="email" />
-          <mat-error *ngIf="email.invalid">
-            <div *ngIf="email.errors?.uniqueAlterEgo">
-              Email is already taken.
-            </div>
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Phone</mat-label>
-          <input matInput placeholder="" type="tel" formControlName="phone" >
-          <mat-hint align="start">In Format: +1-541-754-3010</mat-hint>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Username</mat-label>
-          <input matInput placeholder="" type="text" formControlName="userName" >
-        </mat-form-field>
+      <form [formGroup]="RegisterForm" (ngSubmit)="onSubmit()" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="15px" >
+
+        <div class="emailinputone">
+          <mat-form-field appearance="outline" >
+
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="" type="text" formControlName="emailId"  />
+            <mat-error *ngIf="emailId.invalid">
+              <div *ngIf="emailId.errors?.userEmailExists">
+                Email is already registered.
+              </div>
+            </mat-error>
+
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="10px">
+
+          <div class="emailinput">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput placeholder="" type="text" formControlName="firstName" >
+          </mat-form-field>
+          </div>
+
+          <div class="emailinput">
+          <mat-form-field appearance="outline">
+            <mat-label>Last name</mat-label>
+            <input matInput placeholder="" type="text" formControlName="lastName" >
+          </mat-form-field>
+          </div>
+
+        </div>
 
 
-        <mat-form-field appearance="outline">
-          <mat-label>Password</mat-label>
-          <label>
-            <input matInput type="password" formControlName="password"  >
-          </label>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Confirm Password</mat-label>
-          <label>
-            <input matInput type="password" formControlName="confirmPassword"  >
-          </label>
-        </mat-form-field>
+        <div fxLayout="row" fxLayoutGap="10px">
+
+          <div class="emailinput">
+          <mat-form-field appearance="outline">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="" type="text" formControlName="userName" >
+            <mat-error *ngIf="userName.invalid">
+              <div *ngIf="userName.errors?.userNameExists">
+                Username not available.
+              </div>
+            </mat-error>
+          </mat-form-field>
+          </div>
+
+          <div class="emailinput">
+          <mat-form-field appearance="outline">
+            <mat-label>Phone</mat-label>
+            <input matInput placeholder="" type="tel" formControlName="phone" >
+            <mat-hint align="start">In Format: +1-541-754-3010</mat-hint>
+          </mat-form-field>
+          </div>
+
+        </div>
+
+
+        <div fxLayout="row" fxLayoutGap="10px">
+
+          <div class="emailinput">
+          <mat-form-field appearance="outline">
+
+            <mat-label>Password</mat-label>
+            <label>
+              <input matInput type="password" formControlName="password"  >
+            </label>
+          </mat-form-field>
+          </div>
+
+
+          <div class="emailinput">
+          <mat-form-field appearance="outline">
+            <mat-label>Confirm Password</mat-label>
+            <label>
+              <input matInput type="password" formControlName="confirmPassword"  >
+            </label>
+
+            <mat-error *ngIf="confirmPassword.invalid">
+              <div *ngIf="confirmPassword.errors?.passwordNotMatch">
+                Password does not match.
+              </div>
+            </mat-error>
+
+          </mat-form-field>
+          </div>
+
+        </div>
+
 
         <span fxLayout="row" fxLayoutAlign="center">
         <button mat-raised-button type="submit" color="primary">Register</button>
@@ -61,5 +111,14 @@
       </form>
 
     </mat-card-content>
+  </mat-card>
+
+  <mat-card *ngIf="submitted" class="example-card" fxFlex="1 1 auto">
+    <mat-card-title> Registration Successful</mat-card-title>
+    <mat-card-content> Proceed to Login	</mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+      <button mat-raised-button routerLink="/login"
+              routerLinkActive="active" color="primary">Login</button>
+    </mat-card-actions>
   </mat-card>
 </div>
