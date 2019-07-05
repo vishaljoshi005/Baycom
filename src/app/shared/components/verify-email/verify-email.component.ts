@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {VerifyEmail} from '@/core/models/verifyEmailModel';
 import {VerfiyEmailService} from '@/core/services/miscellaneous/verfiy-email.service';
 
 @Component({
@@ -10,10 +9,8 @@ import {VerfiyEmailService} from '@/core/services/miscellaneous/verfiy-email.ser
 })
 export class VerifyEmailComponent implements OnInit {
 
-  private verfiyData = VerifyEmail;
-
   private verify = {
-    userName: '',
+    userId: '',
     verificationToken: ''
   };
 
@@ -26,10 +23,10 @@ export class VerifyEmailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.verfiyData.username = this.route.snapshot.paramMap.get('id');
-    this.verfiyData.verificationToken = this.route.snapshot.paramMap.get('token');
+    this.verify.userId = this.route.snapshot.paramMap.get('id');
+    this.verify.verificationToken = this.route.snapshot.paramMap.get('token');
 
-    this.verifyEmailService.verifyEmail(this.verfiyData)
+    this.verifyEmailService.verifyEmail(this.verify)
       .subscribe((next) => {
         console.log('From the component');
       });
@@ -37,3 +34,6 @@ export class VerifyEmailComponent implements OnInit {
   }
 
 }
+
+// todo add flag and show according to the response from spring
+// Create HTML content of this page
