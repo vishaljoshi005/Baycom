@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+import {Env} from '@/core/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VerfiyEmailService {
 
-  private BASE_URL = 'http://10.0.0.4:8080'; // change this later
+  private BASE_URL = Env.BASE_URL; // change this later
   private VERIFY_EMAIL_URL = `${this.BASE_URL}/users/verification`;
 
 

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
+import {Env} from '@/core/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ForgotPasswordService {
-  private BASE_URL = 'http://10.0.0.4:8080'; // change this later
+  private BASE_URL = Env.BASE_URL; // change this later
   private FORGOT_PASSWORD_URL = `${this.BASE_URL}/users/forgot-password`;
   private FORGOT_CHECKTOKEN_URL = `${this.BASE_URL}/users/checktoken`;
   private RESET_PASSWORD_URL = `${this.BASE_URL}/users/reset-password`;
@@ -48,7 +49,7 @@ export class ForgotPasswordService {
 
   resetPassword(resetData): Observable<any> {
     console.log(resetData);
-    return this.http.post<any>(this.RESET_PASSWORD_URL, resetData)
+    return this.http.put<any>(this.RESET_PASSWORD_URL, resetData)
       .pipe(map(response => {
           console.log('Response from Spring' + response);
           console.log(response);

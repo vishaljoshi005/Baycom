@@ -3,13 +3,16 @@ import {Observable, of, throwError, timer} from 'rxjs';
 import {catchError, debounceTime, map, switchMap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {AbstractControl, AsyncValidatorFn} from '@angular/forms';
+import {Env} from '@/core/env';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserValidatorsService {
 
-  private BASE_URL = 'http://10.0.0.4:8080'; // change this later
+  private BASE_URL = Env.BASE_URL;
+  private CHECK_EMAIL_URL = `${this.BASE_URL}/users/email/`;
+  private CHECK_USER_NAME = `${this.BASE_URL}/users/username/` ;
 
   constructor(private http: HttpClient) { }
 
@@ -19,7 +22,7 @@ export class UserValidatorsService {
       .pipe(
         debounceTime(1000),
         switchMap(() => {
-          return this.http.get<any>(`${this.BASE_URL}/users/email/${email}`);
+          return this.http.get<any>(`${this.CHECK_EMAIL_URL}${email}`);
         }),
         catchError((error) => throwError(error))
       );
@@ -49,7 +52,7 @@ export class UserValidatorsService {
       .pipe(
         debounceTime(1000),
         switchMap(() => {
-          return this.http.get<any>(`${this.BASE_URL}/users/username/${username}`);
+          return this.http.get<any>(`${this.CHECK_USER_NAME}${username}`);
         }),
         catchError(() => null)
       );

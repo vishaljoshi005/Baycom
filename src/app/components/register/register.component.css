@@ -29,3 +29,21 @@
   width: 610px;
   max-width:100%;
 }
+
+.mat-flat-button{
+  min-width: 1%;
+  font-size: 11px;
+  margin-top: 5px;
+  padding: 5px;
+}
+
+.login{
+  padding-top: 5px;
+}
+
+#link{
+
+}
+a:link {
+  text-decoration: none;
+}

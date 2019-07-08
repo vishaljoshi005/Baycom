@@ -14,7 +14,7 @@ export class VerifyEmailComponent implements OnInit {
     verificationToken: ''
   };
 
-  private verficationSucessful: boolean;
+   verficationSucessful: boolean;
 
 
   constructor(private route: ActivatedRoute, private router: Router, private verifyEmailService: VerfiyEmailService) {

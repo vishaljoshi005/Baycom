@@ -104,11 +104,18 @@
         </div>
 
 
-        <span fxLayout="row" fxLayoutAlign="center">
+        <span fxLayout="row" fxLayoutAlign="">
         <button mat-raised-button type="submit" color="primary">Register</button>
       </span>
 
       </form>
+
+      <span class="login" fxLayout="row" fxLayoutAlign="center" fxLayoutGap="5px">
+        <span>Already Registered </span>
+        <a id="link" routerLink="/login"
+           routerLinkActive="active">Login</a>
+
+      </span>
 
     </mat-card-content>
   </mat-card>

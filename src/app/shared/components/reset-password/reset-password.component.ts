@@ -10,7 +10,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 })
 
 export class ResetPasswordComponent implements OnInit {
-  private tokenMatched: boolean;
+   tokenMatched: boolean;
   private verify = {
     userId: '',
     token: '',
@@ -53,7 +53,7 @@ export class ResetPasswordComponent implements OnInit {
 
   }
 
-  private onSubmit() {
+   onSubmit() {
     if (this.resetForm.valid) {
       this.verify.password = this.resetForm.get('password').value;
       this.forgotPassword.resetPassword(this.verify).subscribe((data) => {

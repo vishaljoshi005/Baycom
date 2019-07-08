@@ -3,6 +3,7 @@ import {HttpClient, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable, of} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {User, LoginModel} from '@/core/models';
+import {Env} from '@/core/env';
 
 interface LoginResponse {
   success: boolean;
@@ -18,7 +19,7 @@ export class AuthService {
   private currentUserSubject: BehaviorSubject<User>;
   public currentUser: Observable<User>;
 
-  private BASE_URL = 'http://10.0.0.4:8080'; // change this later
+  private BASE_URL = Env.BASE_URL; // change this later
   private LOGIN_URL = `${this.BASE_URL}/login`;
 
   constructor(private http: HttpClient) {
@@ -36,7 +37,7 @@ export class AuthService {
       .pipe(map(user => {
         // console.log('USER WHOLE OBJECT');
         // console.log(user);
-        // console.log(user.headers.get('Authorization'));
+         console.log(user.headers.get('Authorization'));
         if (user.headers.get('Authorization')) {
           localStorage.setItem('currentUser', JSON.stringify({username: user.body.username, token: user.headers.get('Authorization')}));
           this.currentUserSubject.next({username: user.body.username, token: user.headers.get('Authorization')});

@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
   }
 
 
-  private onSubmit() {
+   onSubmit() {
     if (this.loginForm.valid) {
       this.authenticationService.login(this.loginForm.value).subscribe((data) => {
         if (data.success) {
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-    private forgotDialog() {
+     forgotDialog() {
       this.dialog.open( ForgotPasswordComponent , { disableClose: true,
         data: { name: 'austin' },
       });
