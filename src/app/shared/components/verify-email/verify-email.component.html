@@ -1,3 +1,29 @@
-<p>
-  verify-email works!
-</p>
+<div *ngIf="verficationSucessful" class="main" fxLayout="column" fxLayoutAlign="center center" >
+
+
+
+  <mat-card  class="example-card" fxFlex="0 1 auto" >
+    <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+      <mat-card-title>
+        Ebay2Woo
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-header fxLayout="column" fxLayoutAlign="center center">
+      <mat-card-title>
+        Email Verify
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      Email Verification successful
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutAlign="center">
+
+        <h6>Proceed to login</h6>
+        <button mat-raised-button  routerLink="/login"
+                routerLinkActive="active" color="warn">Login</button>
+
+    </mat-card-actions>
+
+  </mat-card>
+
+</div>

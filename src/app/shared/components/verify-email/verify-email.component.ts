@@ -14,10 +14,11 @@ export class VerifyEmailComponent implements OnInit {
     verificationToken: ''
   };
 
+  private verficationSucessful: boolean;
 
 
   constructor(private route: ActivatedRoute, private router: Router, private verifyEmailService: VerfiyEmailService) {
-
+    this.verficationSucessful = false;
     // this.snapshotParam = this.route.snapshot.paramMap.get('token');
     // console.log(this.snapshotParam);
   }
@@ -28,6 +29,8 @@ export class VerifyEmailComponent implements OnInit {
 
     this.verifyEmailService.verifyEmail(this.verify)
       .subscribe((next) => {
+        // test suceess then make verificationSucessful
+        this.verficationSucessful = true;
         console.log('From the component');
       });
 

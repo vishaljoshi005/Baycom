@@ -32,8 +32,8 @@ export class RegisterComponent implements OnInit {
       lastName: ['',  [Validators.required], [] ],
       emailId: ['',  [Validators.required, Validators.email], [ this.userValidator.userEmailValidator()] ],
       phone: ['', [Validators.maxLength(15)]],
-      userName: ['',  [Validators.required], [ this.userValidator.userNameValidator()] ],
-      password: ['', [Validators.required]],
+      userName: ['',  [Validators.required, Validators.pattern(/^[a-zA-Z0-9_]+$/)], [ this.userValidator.userNameValidator()] ],
+      password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['',  [Validators.required, this.passwordMatcher.bind(this)], [] ],
     });
   }
@@ -56,8 +56,6 @@ export class RegisterComponent implements OnInit {
         } else {
           this.RegisterForm.reset();
         }}
-      }, ( err ) => {
-          // console.log('Register Error');
       });
 
       this.RegisterForm.get('firstName').clearValidators();
@@ -69,6 +67,7 @@ export class RegisterComponent implements OnInit {
       this.RegisterForm.get('confirmPassword').clearValidators();
     } else {
       // Add some thing show invalid forms
+      this.RegisterForm.reset();
     }
 
   }

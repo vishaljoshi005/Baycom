@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ForgotPasswordService} from '@/core/services/miscellaneous/forgot-password.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-reset-password',
@@ -19,6 +19,14 @@ export class ResetPasswordComponent implements OnInit {
 
   private resetForm: FormGroup;
 
+  // Password Match Validator
+  private passwordMatcher(control: FormControl): { [s: string]: boolean } {
+    if (this.resetForm && (control.value !== this.resetForm.controls.password.value) ) {
+      return { passwordNotMatch: true };
+    }
+    return null;
+  }
+
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private forgotPassword: ForgotPasswordService) {
     this.tokenMatched = false;
@@ -29,7 +37,7 @@ export class ResetPasswordComponent implements OnInit {
 
     this.resetForm = this.formBuilder.group({
       password: ['',  [Validators.required], [] ],
-      confirmPassword: ['', [Validators.required]]
+      confirmPassword: ['', [Validators.required, , this.passwordMatcher.bind(this)]]
     });
   }
 
@@ -56,8 +64,6 @@ export class ResetPasswordComponent implements OnInit {
         } else {
           this.resetForm.reset();
         }
-      }, ( err ) => {
-
       });
 
       this.resetForm.get('confirmPassword').clearValidators();
