@@ -19,9 +19,9 @@ export class VerfiyEmailService {
     console.log(verifyData);
     return this.http.post<any>(this.VERIFY_EMAIL_URL, verifyData)
       .pipe(map(response => {
-          console.log('Response from Spring' + response);
-          console.log(response);
-          if (response.successCode === 1) {
+          if (response.success) {
+            console.log('Response from Spring' + response);
+            console.log(response);
             return {success: true, message: 'Verification Success'};
           } else {
             return {success: false, message: 'Verification Failed'};

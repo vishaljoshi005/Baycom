@@ -19,11 +19,12 @@ export class ForgotPasswordService {
     console.log(forgotData);
     return this.http.post<any>(this.FORGOT_PASSWORD_URL, forgotData)
       .pipe(map(response => {
-          console.log('Response from Spring' + response);
-          console.log(response);
-          if (response.successCode === 1) {
+          if (response.success) {
+            console.log('Response from Spring' + response);
+            console.log(response);
             return {success: true, message: ' Forgot Success'};
           } else {
+            console.log(response);
             return {success: false, message: 'Forgot Failed'};
           }
         }), catchError (error => of({success: false, message: 'Forgot Failed'}) )
@@ -35,9 +36,10 @@ export class ForgotPasswordService {
     console.log(token);
     return this.http.post<any>(this.FORGOT_CHECKTOKEN_URL, token)
       .pipe(map(response => {
-          console.log('Response from Spring' + response);
-          console.log(response);
-          if (response.successCode === 1) {
+
+          if (response.success) {
+            console.log('Response from Spring' + response);
+            console.log(response);
             return {success: true, message: ' Forgot Success'};
           } else {
             return {success: false, message: 'Forgot Failed'};
@@ -51,9 +53,10 @@ export class ForgotPasswordService {
     console.log(resetData);
     return this.http.put<any>(this.RESET_PASSWORD_URL, resetData)
       .pipe(map(response => {
-          console.log('Response from Spring' + response);
-          console.log(response);
-          if (response.successCode === 1) {
+
+          if (response.success) {
+            console.log('Response from Spring' + response);
+            console.log(response);
             return {success: true, message: ' Reset Success'};
           } else {
             return {success: false, message: 'Reset Failed'};

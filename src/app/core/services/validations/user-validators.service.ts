@@ -34,7 +34,7 @@ export class UserValidatorsService {
         .pipe(
           map(res => {
             console.log(res);
-            if (res.successCode === 0) {
+            if (!res.success) {
               return {userEmailExists: true};
             } else {
             return null;
@@ -63,7 +63,7 @@ export class UserValidatorsService {
       return this.searchUserName(control.value)
         .pipe(
           map(res => {
-            if (res.successCode === 0) {
+            if (!res.success) {
               return {userNameExists: true};
             } else {
               return null;

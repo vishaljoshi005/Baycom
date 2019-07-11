@@ -20,8 +20,9 @@ export class RegisterService {
     console.log(registerdata);
     return this.http.post<any>(this.SIGNUP_URL, registerdata )
       .pipe(map(response => {
-        console.log(response);
-        if (response.successCode === 1) {
+
+        if (response.success) {
+          console.log(response);
           return {success: true, message: 'Registration Success'};
         } else {
           return {success: false, message: 'Registration Failed'};

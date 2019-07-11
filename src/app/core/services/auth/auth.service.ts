@@ -7,7 +7,7 @@ import {Env} from '@/core/env';
 
 interface LoginResponse {
   success: boolean;
-  msg: string;
+  message: string;
 }
 
 @Injectable({
@@ -36,22 +36,28 @@ export class AuthService {
     return this.http.post<any>(this.LOGIN_URL, logindata , { observe : 'response'} )
       .pipe(map(user => {
         // console.log('USER WHOLE OBJECT');
-        // console.log(user);
+         console.log(user);
+        // add check here
+         if (user.body.success) {
+           localStorage.setItem('currentUser', JSON.stringify({username: user.body.username, token: user.headers.get('Authorization')}));
+           this.currentUserSubject.next({username: user.body.username, token: user.headers.get('Authorization')});
+           console.log(localStorage.getItem('currentUser'));
+           return { success : true, message : 'Authentication Successful'};
+         } else {
+           return { success : false, message : 'Invalid username or password'};
+         }
          console.log(user.headers.get('Authorization'));
-        if (user.headers.get('Authorization')) {
-          localStorage.setItem('currentUser', JSON.stringify({username: user.body.username, token: user.headers.get('Authorization')}));
-          this.currentUserSubject.next({username: user.body.username, token: user.headers.get('Authorization')});
-          return { success : true, message : 'Authentication Successful'};
-        } else {
-          return { success : false, message : 'Invalid username or password'};
-        }
+        //  if (user.headers.get('Authorization')) {
+        //   localStorage.setItem('currentUser', JSON.stringify({username: user.body.username, token: user.headers.get('Authorization')}));
+        //   this.currentUserSubject.next({username: user.body.username, token: user.headers.get('Authorization')});
+        //   console.log(localStorage.getItem('currentUser'));
+        //   return { success : true, message : 'Authentication Successful'};
+        // } else {
+        //   return { success : false, message : 'Invalid username or password'};
+        // }
       }),
         catchError(() => of({success : false, message : 'Invalid username or password'}) ));
   }
-
-
-
-
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
