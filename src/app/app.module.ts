@@ -27,6 +27,13 @@ import {AuthService} from '@/core/services/auth/auth.service';
 import {HttpClientModule} from '@angular/common/http';
 import { RegisterComponent } from './components/register/register.component';
 import {CoreModule} from '@/core/core.module';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import {NgxsModule} from '@ngxs/store';
+import {AuthState} from '@/core/state/auth/auth.state';
+import {environment} from '../environments/environment';
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import {NgxsStoragePluginModule} from '@ngxs/storage-plugin';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
   bgsColor: '#FF4500',
@@ -44,7 +51,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AppComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    RegisterComponent
+    RegisterComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -57,6 +65,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     NgxUiLoaderHttpModule,
     NgxUiLoaderRouterModule,
+    NgxsModule.forRoot([AuthState], { developmentMode: !environment.production }),
+    NgxsStoragePluginModule.forRoot(),
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot(),
+
 
     CoreModule,
     SharedModule

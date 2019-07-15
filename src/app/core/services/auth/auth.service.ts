@@ -33,20 +33,23 @@ export class AuthService {
 
   login(logindata: LoginModel): Observable<any> {
     console.log(logindata);
-    return this.http.post<any>(this.LOGIN_URL, logindata , { observe : 'response'} )
+    return this.http.post<any>(this.LOGIN_URL, logindata, )
       .pipe(map(user => {
         // console.log('USER WHOLE OBJECT');
          console.log(user);
+
+         // console.log(`User Success is ${user.success}`);
+
         // add check here
-         if (user.body.success) {
-           localStorage.setItem('currentUser', JSON.stringify({username: user.body.username, token: user.headers.get('Authorization')}));
-           this.currentUserSubject.next({username: user.body.username, token: user.headers.get('Authorization')});
+         if (user.success) {
+           localStorage.setItem('currentUser', JSON.stringify({username: user.username, token: user.token}));
+           this.currentUserSubject.next({username: user.username, token: user.token});
            console.log(localStorage.getItem('currentUser'));
            return { success : true, message : 'Authentication Successful'};
          } else {
-           return { success : false, message : 'Invalid username or password'};
+           return { success : false, message : 'Invalid username or password '};
          }
-         console.log(user.headers.get('Authorization'));
+        //  console.log(user.headers.get('Authorization'));
         //  if (user.headers.get('Authorization')) {
         //   localStorage.setItem('currentUser', JSON.stringify({username: user.body.username, token: user.headers.get('Authorization')}));
         //   this.currentUserSubject.next({username: user.body.username, token: user.headers.get('Authorization')});
@@ -55,11 +58,20 @@ export class AuthService {
         // } else {
         //   return { success : false, message : 'Invalid username or password'};
         // }
-      }),
-        catchError(() => of({success : false, message : 'Invalid username or password'}) ));
+      })
+        ,
+        catchError((err) => of({success : false, message : err.message}) )
+      );
   }
   logout() {
+    // Take token in para and return it to backend for deleting
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
+  }
+  logoutOne(token) {
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+    // add http request
+    return of('deleted');
   }
 }

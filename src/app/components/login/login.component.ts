@@ -4,6 +4,10 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatSnackBar} from '@angular/ma
 import {Router} from '@angular/router';
 import {AuthService} from '@/core/services/auth/auth.service';
 import {ForgotPasswordService} from '@/core/services/miscellaneous/forgot-password.service';
+// import {Actions, ofActionErrored, Store} from '@ngxs/store';
+// import {Login} from '@/core/state/auth/auth.action';
+// import {catchError} from 'rxjs/operators';
+// import {of} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -13,15 +17,40 @@ import {ForgotPasswordService} from '@/core/services/miscellaneous/forgot-passwo
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
-  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private authenticationService: AuthService , private router: Router, private snackBar: MatSnackBar) { }
 
-  ngOnInit() {
+  constructor(private formBuilder: FormBuilder, private dialog: MatDialog, private authenticationService: AuthService ,
+              private router: Router, private snackBar: MatSnackBar,
+              // private store: Store, private actions$: Actions
+  ) { }
+
+
+  createForm() {
     this.loginForm = this.formBuilder.group({
       username: ['',  [Validators.required], [] ],
       password: ['', [Validators.required]]
     });
+  }
+
+  resetForm(form: FormGroup) {
+
+    form.reset();
+
+    Object.keys(form.controls).forEach(key => {
+      form.get(key).setErrors(null) ;
+    });
+  }
+
+  ngOnInit() {
+    this.createForm();
+    // this.loginForm = this.formBuilder.group({
+    //   username: ['',  [Validators.required], [] ],
+    //   password: ['', [Validators.required]]
+    // });
 
     this.authenticationService.logout();
+    // this.actions$.pipe(ofActionErrored(Login)).subscribe(() => {
+    //   this.resetForm(this.loginForm);
+    //   } );
   }
   openSnackBar() {
     this.snackBar.open('Invalid Username or Password', 'Close', {
@@ -34,18 +63,27 @@ export class LoginComponent implements OnInit {
    onSubmit() {
     if (this.loginForm.valid) {
       this.authenticationService.login(this.loginForm.value).subscribe((data) => {
+        console.log(data);
         if (data.success) {
-          this.router.navigate(['/login']); // Change this URL
+          this.router.navigate(['/dashboard']); // Change this URL
         } else {
           this.openSnackBar();
-          this.loginForm.reset();
+          this.resetForm(this.loginForm);
         }
       }, ( err ) => {
 
       });
 
-      this.loginForm.get('username').clearValidators();
-      this.loginForm.get('password').clearValidators();
+      // this.store.dispatch
+      // (new Login({username: this.loginForm.get('username').value, password: this.loginForm.get('password').value}))
+      //   .pipe( catchError((err => { // this is due because action ofActionerrored to make it catch and then handle
+      //     return of(err) ; })) )
+      //   .subscribe((message) => {
+      //     console.log(message); }
+      //   );
+
+      // this.loginForm.get('username').clearValidators();
+      // this.loginForm.get('password').clearValidators();
     } else {
       // Add some thing
     }

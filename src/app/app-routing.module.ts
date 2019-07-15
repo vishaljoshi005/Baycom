@@ -5,6 +5,7 @@ import {PageNotFoundComponent} from './shared/components/page-not-found/page-not
 import {RegisterComponent} from '@/components/register/register.component';
 import {VerifyEmailComponent} from '@/shared/components/verify-email/verify-email.component';
 import {ResetPasswordComponent} from '@/shared/components/reset-password/reset-password.component';
+import {DashboardComponent} from '@/components/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path: 'login',        component: LoginComponent},
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'register',        component: RegisterComponent},
   { path: 'verify/:id/:token', component: VerifyEmailComponent},
   { path: 'reset/:id/:token', component: ResetPasswordComponent},
+  { path: 'dashboard', component: DashboardComponent},
   { path: 'page',        component: PageNotFoundComponent}, // to be changed with double asterisk cz wildcard
 ];
 
