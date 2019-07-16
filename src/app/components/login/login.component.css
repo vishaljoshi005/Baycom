@@ -1,11 +1,16 @@
-.main{
-  background-color: #E8E8E8;
+/*.main{*/
+/*  background-color: #E8E8E8;*/
+/*  min-height: 100vh;*/
+/*}*/
+
+.mainone{
   height: 100vh;
 }
+
 .example-card {
+  margin-top: 10px;
   width:400px;
   max-width: 100%;
-//border: solid ;
   padding: 30px;
 }
 

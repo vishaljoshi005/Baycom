@@ -43,7 +43,7 @@ export class AuthService {
         // add check here
          if (user.success) {
            localStorage.setItem('currentUser', JSON.stringify({username: user.username, token: user.token}));
-           this.currentUserSubject.next({username: user.username, token: user.token});
+           this.currentUserSubject.next({loginusername: user.username, idconf: user.token});
            console.log(localStorage.getItem('currentUser'));
            return { success : true, message : 'Authentication Successful'};
          } else {

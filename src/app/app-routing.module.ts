@@ -6,14 +6,15 @@ import {RegisterComponent} from '@/components/register/register.component';
 import {VerifyEmailComponent} from '@/shared/components/verify-email/verify-email.component';
 import {ResetPasswordComponent} from '@/shared/components/reset-password/reset-password.component';
 import {DashboardComponent} from '@/components/dashboard/dashboard.component';
+import {AuthGuard} from '@/core/guards';
 
 const routes: Routes = [
   { path: 'login',        component: LoginComponent},
-  { path: '',   redirectTo: '/login', pathMatch: 'full' },
+  { path: '',   redirectTo: '/dashboard', pathMatch: 'full' }, // CHange to login
   { path: 'register',        component: RegisterComponent},
   { path: 'verify/:id/:token', component: VerifyEmailComponent},
   { path: 'reset/:id/:token', component: ResetPasswordComponent},
-  { path: 'dashboard', component: DashboardComponent},
+  { path: 'dashboard', component: DashboardComponent, }, // canActivate: [AuthGuard] add this here
   { path: 'page',        component: PageNotFoundComponent}, // to be changed with double asterisk cz wildcard
 ];
 
